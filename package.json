@@ -1,0 +1,27 @@
+{
+  "name": "mylibrary",
+  "version": "1.0.0",
+  "description": "app to build a library management system",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandinihulsurkar/MyLibrary.git"
+  },
+  "keywords": [],
+  "author": "Nandini Hulsurkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandinihulsurkar/MyLibrary/issues"
+  },
+  "homepage": "https://github.com/nandinihulsurkar/MyLibrary#readme",
+  "devDependencies": {
+    "parcel": "^2.10.2",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
