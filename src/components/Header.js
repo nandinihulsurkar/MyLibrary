@@ -1,11 +1,21 @@
 
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-//import menuImg from "../images/menu.png";
+import LoggedInUser from "../contexts/LoggedInUser";
+import UserMenu from "./UserMenu";
 
 const Header = () => {
-    console.log(window.location.pathname);
+    
     const [selectedMenu, setSelectedMenu] = useState(window.location.pathname);
+
+    const [showUserMenu, setShowUserMenu] = useState(false);
+    
+    const {liUserDetails, setLiUserDetails} = useContext(LoggedInUser);
+    const liuFL = liUserDetails['liUserFullname'].charAt(0);
+    
+    const manageUserIconClick = () => {
+        showUserMenu ? setShowUserMenu(false) : setShowUserMenu(true);
+    }
     
     return(
         <div className="sticky top-0 z-50">
@@ -45,25 +55,32 @@ const Header = () => {
                         </li></Link>
                     }
                     {
-                        selectedMenu=="/login" ? <li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 bg-red-400" onClick={()=>setSelectedMenu('/login')}>
+                        !(liUserDetails['isUserLoggedin']) ? selectedMenu=="/login" ? <Link to="/login"><li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 bg-red-400" onClick={()=>setSelectedMenu('/login')}>
                             Login
-                        </li> : <li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-red-400" onClick={()=>setSelectedMenu('/login')}>
+                        </li></Link> : <Link to="/login"><li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-red-400" onClick={()=>setSelectedMenu('/login')}>
                             Login
-                        </li>
+                        </li></Link>
+                        : ''
                     }
                     {
-                        selectedMenu=="/register" ? <li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 bg-red-400" onClick={()=>setSelectedMenu('/register')}>
+                        !(liUserDetails['isUserLoggedin']) ? selectedMenu=="/register" ? <Link to="/register"><li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 bg-red-400" onClick={()=>setSelectedMenu('/register')}>
                             Register
-                        </li> : <li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-red-400" onClick={()=>setSelectedMenu('/register')}>
+                        </li></Link> : <Link to="/register"><li className="mx-5 cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-red-400" onClick={()=>setSelectedMenu('/register')}>
                             Register
-                        </li>
-                    }
+                        </li></Link>
+                        : ''
+                    }                        
                     </ul>
                 </div>
-                <div className="w-[10%] pr-4 py-4 flex justify-end" >
-                    <img className="w-8 h-8 cursor-pointer" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlwDFah55pMqZ0OtACY5z9BhrCtkPqvE6QBw&usqp=CAU"></img>
+                <div className="w-[10%] pr-4 py-4 flex justify-end" onClick={manageUserIconClick} >
+                    <span className="w-9 h-9 pl-3 pt-1 cursor-pointer rounded-full bg-red-500 font-semibold text-white text-lg">{liuFL}</span>
                 </div>
-            </div>           
+            </div>
+
+            <UserMenu 
+                showUM = {showUserMenu} 
+                manageUserIconClick = {() => manageUserIconClick()}                  
+            />          
         </div>
     )
 };
