@@ -22,7 +22,7 @@ const Register = () => {
         {
             const userRegistrationHere = async () => {
                 const urRes = await axios.post('http://localhost:8800/users/registration', userData);
-                console.log(urRes);
+                //console.log(urRes);
                 if(urRes.data === 'Success'){
                     setServerErrorMesg('');
                     setServerSuccessMesg("Congratulations! You have been registered successfully.");

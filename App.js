@@ -11,8 +11,15 @@ import Login from "./src/components/Login";
 import ChangePassword from "./src/components/ChangePassword";
 import UpdateProfile from "./src/components/UpdateProfile";
 
+import AdminHeader from "./src/components/Admin/AdminHeader";
+import AdminHome from "./src/components/Admin/AdminHome";
+import AdminLogin from "./src/components/Admin/AdminLogin";
+import ManageUsers from "./src/components/Admin/ManageUsers";
+import ManageBooks from "./src/components/Admin/ManageBooks";
+
 import SearchContext from "./src/contexts/SearchContext";
 import LoggedInUser from "./src/contexts/LoggedInUser";
+
 
 const LandingHere = () => {
     const [searchedTextIs, setSearchedTextIs] = useState('');
@@ -29,6 +36,15 @@ const LandingHere = () => {
         </div>
         </LoggedInUser.Provider>
         </SearchContext.Provider>
+    )
+}
+
+const AdminLandingHere = () => {
+    return(
+        <div>
+            <AdminHeader />
+            <Outlet />
+        </div>
     )
 }
 
@@ -64,6 +80,24 @@ const appRoutes = createBrowserRouter([
             {
                 path: '/update-profile',
                 element: <UpdateProfile />
+            }
+        ],        
+    },
+    {
+        path: '/admin',
+        element: <AdminLandingHere />,
+        children: [
+            {
+                path: '/admin',
+                element: <AdminLogin />,
+            },
+            {
+                path: '/admin/manage-users',
+                element: <ManageUsers />
+            },
+            {
+                path: '/admin/manage-books',
+                element: <ManageBooks />
             }
         ],
     }    
