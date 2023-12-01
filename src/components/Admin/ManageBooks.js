@@ -1,8 +1,11 @@
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import plusSymbolImg from "../../images/plus_here.png";
+import editPencilImg from "../../images/edit.png";
+import { Link } from "react-router-dom";
 
 const ManageBooks = () => {
     
@@ -42,7 +45,9 @@ const ManageBooks = () => {
                         <input type='text' name='search_user' value={suDefVal} onChange={handleSearchOnChange} onKeyUp={handleSearchOnKeyup} placeholder="search book by ISBN, title, author, publisher" className="p-1 rounded-lg w-[420px] border border-red-400" />
                     </div>
                     <div className="w-[50%] flex justify-end mr-2">
-                        <img className="w-8 h-8 rounded-lg cursor-pointer" title="All New Book" src={plusSymbolImg}></img>
+                        <Link to='/admin/add-edit-book/0'>
+                            <img className="w-8 h-8 rounded-lg cursor-pointer" title="All New Book" src={plusSymbolImg}></img>
+                        </Link>
                     </div>
                 </div>
 
@@ -55,7 +60,7 @@ const ManageBooks = () => {
                             <li className="w-44">Title</li>
                             <li className="w-44">Author</li>
                             <li className="w-44">Publisher</li>
-                            <li className="">Created On</li>
+                            <li className="">Actions</li>
                         </ul>
                     </div>
 
@@ -74,7 +79,11 @@ const ManageBooks = () => {
                                     <li className="w-44">{bk.title}</li>
                                     <li className="w-44">{bk.author}</li>
                                     <li className="w-44">{bk.publisher}</li>
-                                    <li className="">Created On</li>
+                                    <li className="">
+                                    <Link to={'/admin/add-edit-book/'+bk.id}>
+                                        <img className="w-8 h-8 rounded-lg cursor-pointer" title="Edit Book" src={editPencilImg}></img>
+                                    </Link>
+                                    </li>
                                 </ul>
                             </div>
                         ))

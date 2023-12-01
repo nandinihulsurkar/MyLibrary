@@ -1,16 +1,24 @@
 
-import { useContext, useState } from "react";
-import { BooksList } from "../utils/MockData";
+import { useState, useEffect } from "react";
 import BookCard from "./BookCard";
+import axios from "axios";
 
-import SearchContext from "../contexts/SearchContext";
+import { NODEJS_BASE_URL } from '../utils/Constants';
 
 const Books = () => {
+        
+    const [searchedBookList, setSearchedBookList] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    
+    useEffect(() => {
 
-    //const [theBookList, setTheBookList] = useState(BooksList);    
-    const [searchedBookList, setSearchedBookList] = useState(BooksList);
+        const getBooksHere = async () => {
+            const getBooks = await axios.get(NODEJS_BASE_URL+'books/');
+            setSearchedBookList(getBooks.data);
+        }
+        getBooksHere();
 
-    const [searchText, setSearchText] = useState('');    
+    }, [])
     
     return(
         <div>
@@ -36,11 +44,11 @@ const Books = () => {
             </div>
             <div className="m-5 flex flex-wrap justify-center">
             {
-                searchedBookList.filter(
-                    (serRes)=> serRes.author.toLowerCase().includes(searchText.toLowerCase()) || serRes.name.toLowerCase().includes(searchText.toLowerCase()) || serRes.language.toLowerCase().includes(searchText.toLowerCase())
+                searchedBookList.length > 0 ? searchedBookList.filter(
+                    (serRes)=> serRes.author.toLowerCase().includes(searchText.toLowerCase()) || serRes.title.toLowerCase().includes(searchText.toLowerCase()) || serRes.language.toLowerCase().includes(searchText.toLowerCase())
                 ).map((book) => (
                     <BookCard key={book.id} BookData={book} />
-                ))
+                )) : ''
             }
             </div>
         </div>

@@ -16,6 +16,7 @@ import AdminHome from "./src/components/Admin/AdminHome";
 import AdminLogin from "./src/components/Admin/AdminLogin";
 import ManageUsers from "./src/components/Admin/ManageUsers";
 import ManageBooks from "./src/components/Admin/ManageBooks";
+import AddEditBook from "./src/components/Admin/AddEditBook";
 
 import SearchContext from "./src/contexts/SearchContext";
 import LoggedInUser from "./src/contexts/LoggedInUser";
@@ -98,6 +99,10 @@ const appRoutes = createBrowserRouter([
             {
                 path: '/admin/manage-books',
                 element: <ManageBooks />
+            },
+            {
+                path: '/admin/add-edit-book/:bookId',
+                element: <AddEditBook />
             }
         ],
     }    

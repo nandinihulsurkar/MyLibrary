@@ -1,14 +1,30 @@
 
 import AuthorCard from "./AuthorCard";
 import { AuthorsList } from "../utils/MockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+import { NODEJS_BASE_URL } from '../utils/Constants';
 
 const Authors = () => {
     
-    const [defaultAuthorsList, setDefaultAuthorsList] = useState(AuthorsList);
-    const [searchedAuthorsList, setSearchedAuthorsList] = useState(defaultAuthorsList);
+    const [defaultAuthorsList, setDefaultAuthorsList] = useState([]);
+    const [searchedAuthorsList, setSearchedAuthorsList] = useState([]);
     
     const [searchText, setSearchText] = useState('');
+
+    useEffect(() => {
+
+        const getAuthorsHere = async () => {
+            const getAuthors = await axios.get(NODEJS_BASE_URL+'books/fetchAuthors');            
+            setSearchedAuthorsList(getAuthors.data);
+
+            setDefaultAuthorsList(getAuthors.data);
+        }
+        getAuthorsHere();
+
+    }, [])
+    console.log(defaultAuthorsList);
     
     return(
         <div>
@@ -35,10 +51,10 @@ const Authors = () => {
                     <img className="w-6 h-6 mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXKCH9X46nhHAOkMyjScXb8nEggGys0wmZ7w&usqp=CAU"></img>
                 </div>
             </div>
-            <div className="m-5 flex flex-wrap justify-center">
+            <div className="m-5 flex flex-wrap justify-right">
             {
                 searchedAuthorsList.filter(
-                    (eachRec) => eachRec.name.toLowerCase().includes(searchText.toLowerCase()) || eachRec.duration.toLowerCase().includes(searchText.toLowerCase())
+                    (eachRec) => eachRec.author.toLowerCase().includes(searchText.toLowerCase())
                 ).map((aut) => (
                     <AuthorCard key={aut.id} authorData={aut} />
                 ))
